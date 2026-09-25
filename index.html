@@ -7,7 +7,7 @@
 <style>html{padding-top:env(safe-area-inset-top,0px)}</style>
 <title>VERITΛS Range</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="VERITΛS">
 <meta name="theme-color" content="#16191b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -257,6 +257,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:32px}
 
 <script>
 "use strict";
+const APP_VERSION="1.5 · Sep 25";
 /* ---------------- Drill library ---------------- */
 // scoring: "zones" = A/C/D/Miss, points 5/3/1/0, -10 per miss (USPSA minor-style), hit factor = points / time
 //          "hits"  = hit or miss on a defined zone; misses add penaltySec to the time
@@ -1013,6 +1014,7 @@ function vSettings(){const st=DB.settings; const samples=DB.sessions.filter(s=>s
       <div class="row"><button class="btn alt small" type="button" data-act="export">Copy backup</button><button class="btn alt small" type="button" data-act="download">Download backup</button></div>
       <label class="f" for="imp">Restore from backup<textarea id="imp" placeholder="Paste a backup here"></textarea></label>
       <button class="btn alt small" type="button" data-act="import">Restore</button></div>
+    <div class="set"><span class="muted" style="font-size:14px">VERITΛS Range version <b class="mono">${APP_VERSION}</b></span></div>
     ${samples?`<div class="set"><button class="btn ghost small" type="button" data-act="clearsamples">Clear ${samples} sample runs</button></div>`:""}
   </div></div>`;
   const th=document.getElementById("mTh"); th.style.left=(thresholdFor(st.sensitivity)*100)+"%";
