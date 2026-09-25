@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAGZ0lEQVR4nO2dTY4bOQyF1cGcIUCQGyS7IKu5P2YV9K77OpmFAKNgmy6VJJLvSe9bJm6boj5R9afS29dv34sQz/iSHYDARXIIE8khTCSHMJEcwkRyCBPJIUwkhzCRHMJEcggTySFMJIcwkRzCRHIIE8khTCSHMJEcwkRyCBPJIUwkhzCRHMJEcggTySFMJIcwkRzCRHIIE8khTP7JDiCNz4/39g//+PnLLxJY3jZZSH1JhRZ20GVlOaYLYbGqKAvKEebEI4tZso4ciU48soYlK8gBpcURdkW45YDV4givIqxyUGhxhFERPjnotDjCpQjZFVJqMwpb/DSVgyutp1CUEA45PMy41D3pAaSALsfEXpnYGZhRTQdajil94Jp9/AhHwJVjMO/BGeeKthFEOUYSnZ5l6uDvgJOjO7lQmV2jFVhy9OUUKqFH2JsDdBGMPZWP9MWGc0UHpXJ0ZARZiztIWwdROUhz105HtAj1I79yXM0ClxZ3cDUWonK0Q21GYYs/WY4N1wek39NpJ1OODc2osPiRdszR3uaVtLgDPAnoxxwLm1HgW5cjB8J5GhcpGUuYVqBq6WkwCDHcCK40uAup/RJxaRQeP+wU0o+fvzBLaXTlaMyCRzeAP76VmBmLUDlS2u86KFNCDfMD/WxlEO9yjTkdzCKucgQPi+BuCw47pnhgVQ5SMyb+ItSVjyA5wnrr8+M9q9RH/nTMDwFVjvFBg3AEMB4DTvGIkKMlX2uYUYnxI6C9QJVjBBwzKmjx9OF+thJQNvwWFOUuVYqpuC/AvXzeiOsz68ePdfzQ58c7zgFEB/nTykj6+p5M7vvFvj+kXgDnKwfU1NutxfQvmYhrhvMrRzeJTxmyPOc3SLIc3X126RkIj7F+6WtJl846yoEwYryTizDF+OWZclqBujvV+CsIQ+UqmXK4rjOOHNOufiQWJ/rrHFP48+/b4z/+/u9vfCRQeMmRW0UbR9tTJx7/t8WS3OdAna62pU0rfnPKFDM6Pul3tyxrZtlxWmnX4u5PdptoKM9WXnA6yDrMaP9bhDPbiTDJMT6pj5gx6xuIzmmZ5DgFYeAixDALFzkQ1hg+Mj7o537PJU4z5lGQlqocL5jboyl+xEMjB9FUfQpLW2jkOAVnsseJZJB15HiBxyyww8yyhRyiD8khTCSHMJEcwkRyCBPJIUy2kMPjVvsOt+/XkQPnsiNOJIPQyLHMZcfC0xYaOQaZOwvsMKcUJzlS7i+fMqtHU8xIeQpiqcqBMNkjxDALJjnGB8f4oB//BpYDjsIlRwunA3ekd0//dqWyUfZcmlD7+NI9902OQO9Iqxx+y3sav7m9vxs/6fcKr6yC5FU5KJYH3np9fK0sxfLPq+w4rTyy56xxCs3ukDcA34fh+laIxJpEebYC5Qfg+0Jm4SgHQjp22G/FL8/JlSPgTWpOmxlc+tqA9+J5QDmtVBLf97jJXtq+ckDlZUoJSdzP5SmuGc6vHMEvgO7u3b4/DH5591zor3P0XW1r3C02d9eEdCI2AMTfVcMD9v00CsK0MgW0MYoWTx8RcsRsSoXTHzFbkgW0F6hyrOHHSpvVBckR1m2J+6FE/vSOmw7zbt3Lu13yC+K2Ky8Z96gCch0fbZj6WJVjOjvst+JHaOUoqYNjYhVJDC9Sx2g5CkAWADfVSs/JU3Avn/ttynppt9iA/oA6CD2SUDnKxe37XCNJBzkVOQeky3f5dFIyhn62AltypwDeupxppbLJ81RPoWg7ze6Q4IPsEhRmlPRpZUM/WMwo6XJchd0PrvgzjzluBD+bmQJjGyEqR99zwh6ROMFoRgGpHBWuPVcboW4UROWo0K0zPoXajAJVOSqAd8U6WKMVcHKU8GVOc6EO/g5EOSpcC4q4om0EV44y6XjCNe/4EY4ALUdBfXwLM6rpoMtR8TglSb9yj6xFhUOOgn3K2gG+GYVIjsoCilBoUQG6CNYCUWafwhU/WeW4QVdCuLSosMpRoVCEUYsKtxwVWEV4taisIEcFShF2LSrryHEj0ZI1nLixoBw3wixZzIkbK8txZLooqwpxZBc5HiF6CjyLfeUQp5BdIRWRSA5hIjmEieQQJpJDmEgOYSI5hInkECaSQ5hIDmEiOYSJ5BAmkkOYSA5hIjmEieQQJpJDmEgOYSI5hInkECaSQ5hIDmEiOYSJ5BAmkkOYSA5h8j+My8zYseaSvwAAAABJRU5ErkJggg==">
+<title>Par Time</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Par Time">
+<meta name="theme-color" content="#16191b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&family=Share+Tech+Mono&display=swap">
+<style>
+:root{
+  --ground:#eceee9; --surface:#ffffff; --sunk:#e1e4de; --ink:#16191b; --ink2:#454c48; --muted:#6c746f;
+  --line:#cfd4cd; --accent:#e2531c; --accent-ink:#ffffff; --accent-soft:#fbe3d8;
+  --good:#23804a; --warn:#b7791f; --bad:#c2352b; --lcd:#16191b; --lcd-ink:#ff8a3d; --lcd-dim:#3a3f3c;
+  --display:"Barlow Condensed","Arial Narrow","Roboto Condensed",sans-serif;
+  --body:"Source Sans 3",-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"Share Tech Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;--ground:#0f1211;--surface:#191d1b;--sunk:#222725;--ink:#e8ebe7;--ink2:#bcc3be;--muted:#8c948f;
+  --line:#2f3532;--accent:#ff7038;--accent-ink:#140a05;--accent-soft:#3a1f14;--good:#4cc17a;--warn:#e0a445;--bad:#ff6b5e;
+  --lcd:#070908;--lcd-ink:#ff8a3d;--lcd-dim:#2a2f2c;}}
+:root[data-theme="dark"]{
+  color-scheme:dark;--ground:#0f1211;--surface:#191d1b;--sunk:#222725;--ink:#e8ebe7;--ink2:#bcc3be;--muted:#8c948f;
+  --line:#2f3532;--accent:#ff7038;--accent-ink:#140a05;--accent-soft:#3a1f14;--good:#4cc17a;--warn:#e0a445;--bad:#ff6b5e;
+  --lcd:#070908;--lcd-ink:#ff8a3d;--lcd-dim:#2a2f2c;}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--ground);color:var(--ink);font:16px/1.45 var(--body);-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.app{max-width:560px;margin:0 auto;padding:12px 16px calc(96px + env(safe-area-inset-bottom,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:.01em;margin:0;text-wrap:balance;line-height:1.05}
+h1{font-size:34px;text-transform:uppercase}
+h2{font-size:26px;text-transform:uppercase}
+h3{font-size:20px}
+.eyebrow{font:600 12px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.muted{color:var(--muted)}
+.mono,.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+p{margin:0}
+.stack{display:flex;flex-direction:column;gap:12px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.spread{display:flex;justify-content:space-between;align-items:center;gap:12px}
+
+/* top bar */
+.top{display:flex;align-items:flex-end;justify-content:space-between;padding:8px 0 14px;gap:12px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand svg{flex:none}
+.back{border:0;background:none;padding:6px 0;color:var(--accent);font-weight:700;display:inline-flex;align-items:center;gap:4px}
+
+/* chips */
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin:0 -16px;padding-inline:16px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-weight:600;font-size:14px;color:var(--ink2)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--ground)}
+
+/* drill list */
+.group-h{display:flex;align-items:baseline;gap:10px;margin-top:10px}
+.group-h .count{font:14px var(--mono);color:var(--muted)}
+.drill{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center;width:100%;text-align:left;
+  background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.drill:active{transform:scale(.99)}
+.drill .name{font:700 21px/1.1 var(--display);text-transform:uppercase}
+.drill .meta{grid-column:1/2;font-size:14px;color:var(--muted)}
+.drill .par{grid-row:1/3;grid-column:2;text-align:right}
+.drill .par b{display:block;font:22px/1 var(--mono);color:var(--ink)}
+.drill .par span{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.tag{display:inline-block;font:600 11px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;padding:4px 6px;border-radius:4px;background:var(--sunk);color:var(--ink2)}
+.tag.hot{background:var(--accent-soft);color:var(--accent)}
+.note{background:var(--sunk);border-radius:10px;padding:12px 14px;font-size:15px;color:var(--ink2)}
+.note b{color:var(--ink)}
+
+/* drill detail */
+.spec{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.spec div{background:var(--surface);padding:10px 8px;text-align:center}
+.spec b{display:block;font:20px/1.1 var(--mono)}
+.spec span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.steps{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.steps li::marker{font-family:var(--mono);color:var(--accent)}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--sunk);border-radius:10px;padding:4px;gap:4px}
+.seg button{border:0;background:none;border-radius:7px;padding:9px;font-weight:700;color:var(--ink2)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.variant{border-left:3px solid var(--accent);padding:4px 0 4px 12px;color:var(--ink2);font-size:15px}
+
+.btn{border:0;border-radius:12px;padding:15px 18px;font:700 20px/1 var(--display);letter-spacing:.06em;text-transform:uppercase;
+  background:var(--accent);color:var(--accent-ink);width:100%}
+.btn.alt{background:var(--sunk);color:var(--ink)}
+.btn.ghost{background:none;border:1.5px solid var(--line);color:var(--ink)}
+.btn.small{font-size:16px;padding:10px 14px;width:auto;border-radius:9px}
+.btn:disabled{opacity:.45}
+
+/* timer */
+.lcd{background:var(--lcd);border-radius:16px;padding:18px 18px 14px;color:var(--lcd-ink);position:relative;overflow:hidden}
+.lcd .status{font:15px var(--mono);letter-spacing:.14em;text-transform:uppercase;display:flex;justify-content:space-between;color:#c9cfca;opacity:.85}
+.lcd .digits{font:clamp(72px,24vw,118px)/1 var(--mono);text-align:right;margin:12px 0 6px;letter-spacing:-.02em}
+.lcd .digits .ghost{color:var(--lcd-dim)}
+.lcd .sub{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;border-top:1px solid #2a2f2c;padding-top:10px}
+.lcd .sub div{font:12px var(--mono);letter-spacing:.1em;color:#9aa29d;text-transform:uppercase}
+.lcd .sub b{display:block;font:22px var(--mono);color:#f3f5f2;letter-spacing:0}
+.lcd.live .status .dot{color:var(--lcd-ink)}
+.lcd.standby .digits{animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.lcd.standby .digits{animation:none}}
+.meter{height:10px;background:var(--lcd-dim);border-radius:5px;position:relative;margin-top:12px;overflow:hidden}
+.meter i{position:absolute;inset:0 auto 0 0;background:#8fd19e;width:0;transition:width 60ms linear}
+.meter .th{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--lcd-ink)}
+.shots{list-style:none;margin:0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;max-height:40vh;overflow:auto}
+.shots li{display:grid;grid-template-columns:44px 1fr 1fr 40px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--line);font-family:var(--mono)}
+.shots li:last-child{border-bottom:0}
+.shots .n{color:var(--muted)}
+.shots .t{font-size:20px}
+.shots .s{color:var(--ink2)}
+.shots button{border:0;background:none;color:var(--muted);font-size:20px;padding:4px}
+.shots .empty{display:block;color:var(--muted);font-family:var(--body);text-align:center;padding:18px}
+.bigbtn{height:84px;font-size:30px;border-radius:16px}
+.bigbtn.stop{background:var(--ink);color:var(--ground)}
+.warnbar{border:1.5px solid var(--warn);color:var(--ink);border-radius:10px;padding:10px 12px;font-size:15px}
+
+/* review */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+.stepper{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.stepper.two{grid-template-columns:repeat(2,1fr)}
+.zone{background:var(--sunk);border-radius:10px;padding:8px;text-align:center}
+.zone .z{font:700 18px var(--display);letter-spacing:.06em}
+.zone .v{font:34px/1.1 var(--mono);margin:2px 0}
+.zone .pm{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.zone .pm button{border:0;border-radius:8px;background:var(--surface);font:700 22px/1 var(--body);padding:10px 0}
+.zone.miss .z{color:var(--bad)}
+.results{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.results div{background:var(--surface);padding:10px}
+.results span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.results b{display:block;font:22px/1.2 var(--mono)}
+.results b.good{color:var(--good)} .results b.bad{color:var(--bad)}
+textarea,select,input[type=text],input[type=number]{width:100%;background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px}
+textarea{min-height:64px;resize:vertical}
+label.f{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:14px}
+
+/* progress */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.stat{padding:2px 0}
+.stat span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.stat b{display:block;font:24px/1.15 var(--mono)}
+.chart{position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--ground);border-radius:8px;padding:6px 9px;font-size:13px;line-height:1.3;white-space:nowrap;transform:translate(-50%,-110%)}
+.chart .tip b{font-family:var(--mono);font-size:15px}
+.hist{list-style:none;margin:0;padding:0}
+.hist li{display:grid;grid-template-columns:1fr auto auto auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+.hist .d{color:var(--ink2)}
+.hist .d small{display:block;color:var(--muted);font-size:12px}
+.hist .num{text-align:right}
+.hist button{border:0;background:none;color:var(--muted);font-size:18px}
+.banner{background:var(--accent-soft);color:var(--ink);border-radius:10px;padding:10px 12px;font-size:14px}
+
+/* settings */
+.set{display:flex;flex-direction:column;gap:6px;padding:14px 0;border-bottom:1px solid var(--line)}
+.set:last-child{border-bottom:0}
+.set .spread b{font-family:var(--mono)}
+input[type=range]{width:100%;accent-color:var(--accent);height:32px}
+.switch{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.switch input{width:24px;height:24px;accent-color:var(--accent)}
+
+/* tabbar */
+.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);
+  padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;z-index:5}
+.tabs .in{display:grid;grid-template-columns:repeat(4,1fr);max-width:560px;width:100%}
+.tabs button{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;color:var(--muted);font:600 12px var(--body);letter-spacing:.04em}
+.tabs button[aria-current="page"]{color:var(--accent)}
+.tabs svg{width:24px;height:24px}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--ground);padding:10px 16px;border-radius:999px;font-weight:600;z-index:9;box-shadow:0 4px 18px rgba(0,0,0,.25)}
+.confirm{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+</style>
+</head>
+<body>
+
+
+<div class="app" id="app"></div>
+<nav class="tabs" aria-label="Main">
+  <div class="in">
+    <button data-tab="drills" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Drills</button>
+    <button data-tab="timer" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg>Timer</button>
+    <button data-tab="progress" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M5 16l4-5 4 3 6-8"/></svg>Progress</button>
+    <button data-tab="settings" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>Settings</button>
+  </div>
+</nav>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+"use strict";
+/* ---------------- Drill library ---------------- */
+// scoring: "zones" = A/C/D/Miss, points 5/3/1/0, -10 per miss (USPSA minor-style), hit factor = points / time
+//          "hits"  = hit or miss on a defined zone; misses add penaltySec to the time
+const SKILLS = ["Cold Start","Cadence","Reloads","Transitions","Speed vs Accuracy"];
+const DRILLS = [
+ {id:"cold-first",skill:"Cold Start",name:"First Shot, Cold",rounds:1,dist:"7 yd",target:"3×5 card",par:{holster:1.7,lowready:1.1},scoring:"hits",penaltySec:0,
+  why:"Your first shot of the day is the one that matters in real life. You get one honest attempt before you warm up, so run this before anything else.",
+  steps:["Hang one 3×5 index card at head height, 7 yards.","Start hands relaxed at your sides, or at low ready.","On the beep, fire one shot on the card.","Log it. Do not re-run it today; the second attempt is not a cold shot."],
+  lowready:"Start with the muzzle depressed about 45° and your finger off the trigger. Par drops because there is no draw."},
+ {id:"fast",skill:"Cold Start",name:"FAST",rounds:6,dist:"7 yd",target:"3×5 card + 8″ circle",par:{holster:7,lowready:6},scoring:"hits",penaltySec:2,
+  credit:"Fundamentals, Accuracy & Speed Test, created by Todd Green.",
+  why:"Tests the draw, a precise pair, a reload, and a fast string in one short run. A standard benchmark you can compare against other shooters.",
+  steps:["Set a 3×5 card above an 8″ circle, 7 yards.","Start with 6 rounds in the gun and one spare magazine (2 rounds in the gun works too, for a slide-lock reload).","On the beep, fire 2 shots on the card.","Reload.","Fire 4 shots on the circle.","Each shot outside its zone adds 2 seconds."],
+  lowready:"Start at low ready with the reload coming from your belt or pocket. Your time will not compare directly with holster times."},
+ {id:"bill",skill:"Cadence",name:"Bill Drill",rounds:6,dist:"7 yd",target:"USPSA / IPSC",par:{holster:2.5,lowready:2.0},scoring:"zones",
+  credit:"Named for Bill Wilson.",
+  why:"Six shots as fast as you can keep them in the A-zone. It shows how fast you can manage recoil and drive the gun back to the same spot.",
+  steps:["One USPSA or IPSC target at 7 yards.","On the beep, fire 6 shots on the A-zone.","Score every hit. Your goal is all A's under par."],
+  lowready:"Start at low ready. The drill is otherwise identical."},
+ {id:"doubles",skill:"Cadence",name:"Doubles",rounds:2,dist:"7 yd",target:"8″ circle",par:{holster:1.8,lowready:1.3},scoring:"hits",penaltySec:0,
+  why:"Watch the split between shot one and shot two. A split far faster than your sight tracking means you are guessing; a slow one means you are over-confirming.",
+  steps:["One 8″ circle at 7 yards.","On the beep, fire 2 shots.","Run it 5 times. Compare your splits across runs."],
+  lowready:"Start at low ready."},
+ {id:"rhythm",skill:"Cadence",name:"Steady Cadence",rounds:5,dist:"10 yd",target:"8″ circle",par:{holster:3.5,lowready:3.0},scoring:"hits",penaltySec:0,
+  why:"Five shots with the same split every time. The app reports split spread (the gap between your fastest and slowest split). Smaller is better.",
+  steps:["One 8″ circle at 10 yards.","On the beep, fire 5 shots at an even rhythm. Pick a pace you can hold, not your fastest.","Check the split spread. Keep it under 0.10 s before you speed up."],
+  lowready:"Start at low ready."},
+ {id:"reload-1r1",skill:"Reloads",name:"1-Reload-1",rounds:2,dist:"7 yd",target:"8″ circle",par:{holster:3.0,lowready:2.4},scoring:"hits",penaltySec:0,
+  why:"The split between shot one and shot two is your reload time. Nothing else in the run hides it.",
+  steps:["Load a magazine with 1 round. Carry a second magazine with at least 1 round.","On the beep, fire 1 shot, reload, fire 1 shot.","Read split 2. That is your reload."],
+  lowready:"Start at low ready. Stage the spare magazine where you would carry it."},
+ {id:"bill-reload",skill:"Reloads",name:"Bill Drill with Reload",rounds:6,dist:"7 yd",target:"USPSA / IPSC",par:{holster:4.0,lowready:3.4},scoring:"zones",
+  why:"Three fast shots, a reload, then three more. Tests whether the reload breaks your rhythm.",
+  steps:["Load 3 rounds. Carry a spare magazine with 3 or more.","On the beep, fire 3 shots on the A-zone.","Reload.","Fire 3 more shots on the A-zone."],
+  lowready:"Start at low ready."},
+ {id:"three-target",skill:"Transitions",name:"Three-Target Transition",rounds:6,dist:"7 yd",target:"3 targets, 1 yd apart",par:{holster:3.0,lowready:2.5},scoring:"zones",
+  why:"Two shots on each target, left to right. Compare your splits on a target with the splits between targets. The gap is your transition cost.",
+  steps:["Three USPSA targets, 1 yard apart, 7 yards.","On the beep, fire 2 shots on each target, left to right.","Next run, go right to left."],
+  lowready:"Start at low ready pointed at the first target."},
+ {id:"wide",skill:"Transitions",name:"Wide Transition",rounds:4,dist:"7 yd",target:"2 targets, 3 yd apart",par:{holster:2.6,lowready:2.1},scoring:"zones",
+  why:"A wide swing forces your eyes to lead the gun. Watch split 3: that is the transition.",
+  steps:["Two targets 3 yards apart, 7 yards.","On the beep, fire 2 shots on the left target, then 2 on the right.","Your eyes move to the second target before the gun does."],
+  lowready:"Start at low ready pointed at the first target."},
+ {id:"failure",skill:"Transitions",name:"Failure Drill",rounds:3,dist:"7 yd",target:"USPSA / IPSC",par:{holster:2.5,lowready:2.0},scoring:"zones",
+  why:"Two to the body and one to the head. A transition in distance-to-target instead of side to side: the head shot demands a harder sight picture.",
+  steps:["One USPSA target at 7 yards.","On the beep, fire 2 shots in the body A-zone, then 1 in the head A-zone.","A head shot outside the A-zone scores as a miss."],
+  lowready:"Start at low ready."},
+ {id:"el-prez",skill:"Speed vs Accuracy",name:"El Presidente",rounds:12,dist:"10 yd",target:"3 targets, 1 yd apart",par:{holster:10,lowready:8},scoring:"zones",
+  credit:"Attributed to Jeff Cooper.",
+  why:"The classic hit-factor drill: turn, draw, six shots, reload, six more. Pushing speed costs points, and hit factor tells you whether the trade was worth it.",
+  steps:["Three targets 1 yard apart, 10 yards.","Load 6 rounds. Carry a spare magazine with 6 or more.","Start facing up-range, hands above your shoulders.","On the beep, turn, draw, fire 2 shots on each target.","Reload, then fire 2 more on each target."],
+  lowready:"Skip the turn and draw. Start facing the targets at low ready. Many ranges require this."},
+ {id:"five-five",skill:"Speed vs Accuracy",name:"5 × 5",rounds:5,dist:"5 yd",target:"5″ circle",par:{holster:5,lowready:4},scoring:"hits",penaltySec:0,
+  why:"Five shots in a 5-inch circle at 5 yards in 5 seconds. A clean run means every hit counts and you beat par.",
+  steps:["One 5″ circle at 5 yards.","On the beep, fire 5 shots on the circle.","Any miss fails the run, no matter the time."],
+  lowready:"Start at low ready."},
+ {id:"push-pull",skill:"Speed vs Accuracy",name:"Push and Pull",rounds:5,dist:"10 yd",target:"8″ circle",par:{holster:3.5,lowready:3.0},scoring:"hits",penaltySec:0,
+  why:"Find the speed where your accuracy breaks. Clean run: go faster next time. Any miss: slow down next time. Your chart walks toward your real limit.",
+  steps:["One 8″ circle at 10 yards.","On the beep, fire 5 shots.","All hits: push the pace on the next run.","Any miss: pull back to the last clean pace."],
+  lowready:"Start at low ready."},
+];
+const byId = id => DRILLS.find(d=>d.id===id);
+
+/* ---------------- Storage ---------------- */
+const KEY="partime.v1";
+let storageOK=true;
+const DEFAULT_SETTINGS={delayMin:1.5,delayMax:4,randomDelay:true,sensitivity:6,echoMs:80,beepHz:2400,autoStop:true,parBeep:true,start:"lowready",theme:"system"};
+let DB={sessions:[],settings:{...DEFAULT_SETTINGS},seeded:false};
+function load(){
+  try{const raw=localStorage.getItem(KEY); if(raw){const d=JSON.parse(raw); DB={sessions:d.sessions||[],settings:{...DEFAULT_SETTINGS,...(d.settings||{})},seeded:!!d.seeded};}}
+  catch(e){storageOK=false}
+  if(!DB.seeded){seedSamples();DB.seeded=true;save();}
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){storageOK=false}}
+
+/* ---------------- Metrics ---------------- */
+function compute(s){
+  const d=byId(s.drillId); const shots=s.shots||[]; const n=shots.length;
+  const raw=n?shots[n-1]:0; const first=n?shots[0]:0;
+  const splits=shots.slice(1).map((t,i)=>t-shots[i]);
+  const spread=splits.length>1?Math.max(...splits)-Math.min(...splits):null;
+  const avgSplit=splits.length?splits.reduce((a,b)=>a+b,0)/splits.length:null;
+  let points=null,hf=null,acc=null,time=raw,miss=0;
+  const type=d?d.scoring:"hits";
+  if(type==="zones"){const z=s.score||{A:0,C:0,D:0,M:0}; miss=z.M||0;
+    points=Math.max(0,5*z.A+3*z.C+1*z.D-10*miss); const possible=5*(z.A+z.C+z.D+miss||1);
+    acc=(5*z.A+3*z.C+1*z.D)/possible; hf=raw>0?points/raw:0;}
+  else{const z=s.score||{H:0,M:0}; miss=z.M||0; const tot=(z.H+miss)||1; acc=z.H/tot; time=raw+miss*((d&&d.penaltySec)||0);}
+  return {n,raw,first,splits,spread,avgSplit,points,hf,acc,time,miss,type};
+}
+const f2=v=>v==null||isNaN(v)?"–":v.toFixed(2);
+const pct=v=>v==null?"–":Math.round(v*100)+"%";
+
+/* ---------------- Sample data ---------------- */
+function seedSamples(){
+  const now=Date.now(),day=864e5; let seed=7; const rnd=()=>{seed=(seed*9301+49297)%233280;return seed/233280};
+  const mk=(drillId,i,total,base,imp,spl)=>{
+    const t0=base-imp*(i/(total-1))+(rnd()-.5)*.18; const shots=[+t0.toFixed(2)];
+    const cnt=byId(drillId).rounds;
+    for(let k=1;k<cnt;k++){let sp=spl*(1-.18*i/(total-1))+(rnd()-.5)*.06; if(drillId==="fast"&&k===2) sp=1.9-.4*i/(total-1)+(rnd()-.5)*.2; shots.push(+(shots[k-1]+sp).toFixed(2));}
+    return shots;};
+  for(let i=0;i<9;i++){const shots=mk("bill",i,9,1.45,.3,.31); const a=Math.min(6,3+Math.round(i/3+rnd()*1.5)); const m=i<2&&rnd()>.5?1:0;
+    DB.sessions.push({id:"s-b"+i,drillId:"bill",date:now-(40-i*4.5)*day,start:"lowready",shots,score:{A:Math.max(0,a-m),C:6-Math.max(0,a-m)-m,D:0,M:m},notes:"",sample:true});}
+  for(let i=0;i<6;i++){const shots=mk("fast",i,6,1.2,.2,.3); const m=i<3?(rnd()>.4?1:0):0;
+    DB.sessions.push({id:"s-f"+i,drillId:"fast",date:now-(38-i*6)*day,start:"lowready",shots,score:{H:6-m,M:m},notes:"",sample:true});}
+}
+
+/* ---------------- Audio engine ---------------- */
+const Audio_={ctx:null,stream:null,node:null,micOK:null,level:0,onShot:null,onLevel:null};
+const WORKLET=`
+class ShotDetector extends AudioWorkletProcessor{
+  constructor(){super();this.th=.5;this.hold=.08*sampleRate;this.armAt=Infinity;this.mutes=[];this.last=-1e12;this.peak=0;this.pc=0;
+    this.port.onmessage=e=>{const d=e.data;if(d.th!=null)this.th=d.th;if(d.hold!=null)this.hold=d.hold*sampleRate;
+      if(d.armAt!=null){this.armAt=d.armAt*sampleRate;this.last=-1e12;} if(d.disarm)this.armAt=Infinity; if(d.mutes)this.mutes=d.mutes.map(m=>[m[0]*sampleRate,m[1]*sampleRate]);};}
+  process(inputs){const ch=inputs[0]&&inputs[0][0];if(!ch)return true;let m=0;const base=currentFrame;
+    for(let i=0;i<ch.length;i++){const v=ch[i]<0?-ch[i]:ch[i];if(v>m)m=v;
+      if(v>=this.th){const f=base+i;if(f>=this.armAt&&f-this.last>=this.hold){let muted=false;for(const w of this.mutes){if(f>=w[0]&&f<=w[1]){muted=true;break;}}
+        if(!muted){this.last=f;this.port.postMessage({shot:f/sampleRate});}}}}
+    if(m>this.peak)this.peak=m;if(++this.pc>=8){this.port.postMessage({level:this.peak});this.peak=0;this.pc=0;}return true;}}
+registerProcessor('shot-detector',ShotDetector);`;
+function thresholdFor(sens){return 0.95-(sens-1)*0.095} // 1 → 0.95 (least sensitive), 10 → 0.095
+async function ensureCtx(){
+  if(!Audio_.ctx){const AC=window.AudioContext||window.webkitAudioContext; Audio_.ctx=new AC({latencyHint:"interactive"});}
+  if(Audio_.ctx.state!=="running"){try{await Audio_.ctx.resume()}catch(e){}}
+  return Audio_.ctx;
+}
+async function ensureMic(){
+  if(Audio_.micOK) return true;
+  const ctx=await ensureCtx();
+  try{
+    if(navigator.audioSession){try{navigator.audioSession.type="play-and-record"}catch(e){}}
+    if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia) throw new Error("no-mic-api");
+    Audio_.stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
+    const src=ctx.createMediaStreamSource(Audio_.stream); const sink=ctx.createGain(); sink.gain.value=0; sink.connect(ctx.destination);
+    let node;
+    if(ctx.audioWorklet&&window.AudioWorkletNode){
+      const url=URL.createObjectURL(new Blob([WORKLET],{type:"application/javascript"}));
+      await ctx.audioWorklet.addModule(url);
+      node=new AudioWorkletNode(ctx,"shot-detector",{numberOfInputs:1,numberOfOutputs:1,outputChannelCount:[1]});
+      node.port.onmessage=e=>{const d=e.data; if(d.shot!=null&&Audio_.onShot)Audio_.onShot(d.shot); if(d.level!=null){Audio_.level=d.level; Audio_.onLevel&&Audio_.onLevel(d.level);}};
+      Audio_.post=m=>node.port.postMessage(m);
+    }else{ // fallback for older browsers
+      node=ctx.createScriptProcessor(256,1,1); const st={th:.5,hold:.08,armAt:Infinity,mutes:[],last:-1e9};
+      node.onaudioprocess=e=>{const ch=e.inputBuffer.getChannelData(0);const t0=ctx.currentTime-ch.length/ctx.sampleRate;let m=0;
+        for(let i=0;i<ch.length;i++){const v=Math.abs(ch[i]);if(v>m)m=v;const t=t0+i/ctx.sampleRate;
+          if(v>=st.th&&t>=st.armAt&&t-st.last>=st.hold&&!st.mutes.some(w=>t>=w[0]&&t<=w[1])){st.last=t;Audio_.onShot&&Audio_.onShot(t);}}
+        Audio_.level=m;Audio_.onLevel&&Audio_.onLevel(m);};
+      Audio_.post=m=>{if(m.th!=null)st.th=m.th;if(m.hold!=null)st.hold=m.hold;if(m.armAt!=null){st.armAt=m.armAt;st.last=-1e9;}if(m.disarm)st.armAt=Infinity;if(m.mutes)st.mutes=m.mutes;};
+    }
+    src.connect(node); node.connect(sink); Audio_.node=node; Audio_.micOK=true;
+    applyDetectorSettings(); return true;
+  }catch(e){Audio_.micOK=false; return false;}
+}
+function applyDetectorSettings(){if(Audio_.post)Audio_.post({th:thresholdFor(DB.settings.sensitivity),hold:DB.settings.echoMs/1000});}
+function beep(at,dur=.3,hz){
+  const ctx=Audio_.ctx; hz=hz||DB.settings.beepHz;
+  const g=ctx.createGain(); g.gain.setValueAtTime(0,at); g.gain.linearRampToValueAtTime(.9,at+.005); g.gain.setValueAtTime(.9,at+dur-.01); g.gain.linearRampToValueAtTime(0,at+dur);
+  const o=ctx.createOscillator(); o.type="square"; o.frequency.value=hz; o.connect(g);
+  const o2=ctx.createOscillator(); o2.type="square"; o2.frequency.value=hz*1.5; const g2=ctx.createGain(); g2.gain.value=.35; o2.connect(g2); g2.connect(g);
+  g.connect(ctx.destination); o.start(at); o2.start(at); o.stop(at+dur+.02); o2.stop(at+dur+.02);
+  return [o,o2];
+}
+let wakeLock=null;
+async function keepAwake(on){try{if(on&&navigator.wakeLock&&!wakeLock){wakeLock=await navigator.wakeLock.request("screen");wakeLock.addEventListener("release",()=>wakeLock=null);}
+  if(!on&&wakeLock){await wakeLock.release();wakeLock=null;}}catch(e){}}
+
+/* ---------------- App state ---------------- */
+const S={view:"drills",filter:"All",drillId:null,start:null,run:null,review:null,progressDrill:null,confirmDel:null};
+const app=document.getElementById("app");
+function go(view,extra){Object.assign(S,extra||{});S.view=view;if(view!=="timer")stopMeter();render();window.scrollTo(0,0);}
+function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>t.hidden=true,2200);}
+document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>{
+  const t=b.dataset.tab; if(S.run&&S.run.state!=="idle"&&t!=="timer"){toast("Stop the timer first");return;}
+  go(t);}));
+function setTabs(){const map={drills:"drills",drill:"drills",timer:"timer",review:"timer",progress:"progress",settings:"settings"};
+  document.querySelectorAll(".tabs button").forEach(b=>{if(b.dataset.tab===map[S.view])b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");});}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const LOGO=`<svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="var(--ink)" stroke-width="2.5"/><circle cx="16" cy="16" r="8" fill="none" stroke="var(--ink)" stroke-width="2.5"/><circle cx="16" cy="16" r="3" fill="var(--accent)"/></svg>`;
+function header(title,back){return `<div class="top">${back?`<button class="back" data-act="${back}" type="button">‹ Back</button>`:`<div class="brand">${LOGO}<h1>${title}</h1></div>`}</div>`;}
+function startPos(){return S.start||DB.settings.start}
+function sessionsFor(id){return DB.sessions.filter(s=>s.drillId===id).sort((a,b)=>a.date-b.date)}
+
+/* ---------------- Views ---------------- */
+function render(){setTabs();
+  ({drills:vDrills,drill:vDrill,timer:vTimer,review:vReview,progress:vProgress,settings:vSettings})[S.view]();}
+
+function vDrills(){
+  const chips=["All",...SKILLS].map(s=>`<button class="chip" type="button" data-filter="${s}" aria-pressed="${S.filter===s}">${s}</button>`).join("");
+  const groups=SKILLS.filter(s=>S.filter==="All"||S.filter===s).map(skill=>{
+    const ds=DRILLS.filter(d=>d.skill===skill);
+    return `<div class="group-h"><h2>${skill}</h2><span class="count">${ds.length}</span></div>`+ds.map(d=>{
+      const runs=sessionsFor(d.id).length; const p=d.par[startPos()];
+      return `<button class="drill" type="button" data-drill="${d.id}"><span class="name">${d.name}</span>
+        <span class="par"><b>${p.toFixed(1)}</b><span>par s</span></span>
+        <span class="meta">${d.rounds} rd · ${d.dist} · ${d.target}${runs?` · <span class="tag hot">${runs} run${runs>1?"s":""}</span>`:""}</span></button>`;}).join("");}).join("");
+  app.innerHTML=header("Par Time")+`<div class="stack">
+    <p class="note"><b>Range plan:</b> run one Cold Start drill first, before you warm up. Then pick one skill for the session and run its drill 5 to 10 times. Par times shown are for a <b>${startPos()==="holster"?"holster":"low ready"}</b> start.</p>
+    <div class="chips" role="group" aria-label="Filter by skill">${chips}</div>${groups}
+    <button class="btn ghost" type="button" data-act="free">Open the free timer</button></div>`;
+}
+
+function vDrill(){
+  const d=byId(S.drillId); const pos=startPos(); const hist=sessionsFor(d.id); const last=hist.slice(-5).map(compute);
+  const best=hist.length?Math.min(...hist.map(s=>compute(s).time)):null;
+  app.innerHTML=header("",`drills`)+`<div class="stack">
+    <div><span class="eyebrow">${d.skill}</span><h1 style="margin-top:6px">${d.name}</h1></div>
+    <div class="spec"><div><b>${d.rounds}</b><span>Rounds</span></div><div><b>${d.dist.replace(" yd","")}</b><span>Yards</span></div>
+      <div><b>${d.par[pos].toFixed(1)}</b><span>Par s</span></div><div><b>${best!=null?f2(best):"–"}</b><span>Your best</span></div></div>
+    <p>${d.why}</p>
+    <div class="card stack"><h3>Setup and course of fire</h3><p class="muted">Target: ${d.target}</p>
+      <ol class="steps">${d.steps.map(s=>`<li>${s}</li>`).join("")}</ol>
+      ${d.scoring==="zones"?`<p class="muted" style="font-size:14px">Scored A/C/D/Miss. Hit factor = points ÷ time. Higher is better.</p>`:`<p class="muted" style="font-size:14px">Scored hit or miss${d.penaltySec?`; each miss adds ${d.penaltySec} s`:""}.</p>`}
+      ${d.credit?`<p class="muted" style="font-size:14px">${d.credit}</p>`:""}</div>
+    <div class="stack"><span class="eyebrow">Start position</span>
+      <div class="seg" role="group" aria-label="Start position"><button type="button" data-pos="lowready" aria-pressed="${pos==="lowready"}">Low ready</button><button type="button" data-pos="holster" aria-pressed="${pos==="holster"}">Holster</button></div>
+      ${pos==="lowready"?`<p class="variant">${d.lowready}</p>`:`<p class="variant">Holster start. Confirm your range allows drawing before you run it.</p>`}</div>
+    ${last.length?`<div class="card"><div class="spread"><h3>Last ${last.length} runs</h3><button class="back" type="button" data-act="prog-${d.id}">Progress ›</button></div>
+      <p class="mono" style="font-size:18px;margin-top:6px">${last.map(m=>f2(m.time)).join("  ")}</p></div>`:""}
+    <button class="btn bigbtn" type="button" data-act="run-${d.id}">Shoot this drill</button></div>`;
+}
+
+/* ---- Timer ---- */
+function newRun(drillId){return {drillId,state:"idle",beepAt:0,shots:[],par:drillId?byId(drillId).par[startPos()]:null,raf:0,timeout:0,lastShotWall:0};}
+function vTimer(){
+  if(!S.run) S.run=newRun(null);
+  const r=S.run; const d=r.drillId?byId(r.drillId):null;
+  const st=DB.settings;
+  app.innerHTML=header("",d?"drill-back":"drills")+`<div class="stack">
+    <div class="spread"><div><span class="eyebrow">${d?d.skill:"Free timer"}</span><h2 style="margin-top:4px">${d?d.name:"Shot timer"}</h2></div>
+      ${d?`<span class="tag">${d.rounds} rd · par ${r.par.toFixed(1)}</span>`:""}</div>
+    ${Audio_.micOK===false?`<div class="warnbar"><b>Microphone unavailable.</b> Shot detection is off, so tap the button below for each shot. To use the mic, allow microphone access for this site in Safari settings and reload.</div>`:""}
+    <div class="lcd" id="lcd"><div class="status"><span id="lcdState">Ready</span><span>${st.randomDelay?`Delay ${st.delayMin}–${st.delayMax}s`:`Delay ${st.delayMin}s`}</span></div>
+      <div class="digits" id="digits"><span class="ghost">0.00</span></div>
+      <div class="sub"><div>Shots<b id="sN">0</b></div><div>First<b id="sF">–</b></div><div>Split<b id="sS">–</b></div></div>
+      <div class="meter" aria-hidden="true"><i id="mBar"></i><span class="th" id="mTh"></span></div></div>
+    <ul class="shots" id="shotList"><li class="empty">Shots appear here with their split times.</li></ul>
+    <div id="ctl"></div></div>`;
+  document.getElementById("mTh").style.left=(thresholdFor(st.sensitivity)*100)+"%";
+  drawTimer(); drawControls(); startMeter();
+}
+function drawControls(){const r=S.run,c=document.getElementById("ctl"); if(!c)return;
+  if(r.state==="idle") c.innerHTML=`<button class="btn bigbtn" type="button" data-act="start">Start</button>`;
+  else if(Audio_.micOK===false&&r.state==="live") c.innerHTML=`<div class="stack"><button class="btn bigbtn" type="button" data-act="tapshot">Tap: Shot</button><button class="btn bigbtn stop" type="button" data-act="stop">Stop</button></div>`;
+  else c.innerHTML=`<button class="btn bigbtn stop" type="button" data-act="stop">${r.state==="standby"?"Cancel":"Stop"}</button>`;}
+function drawTimer(){const r=S.run; const lcd=document.getElementById("lcd"); if(!lcd)return;
+  lcd.className="lcd "+r.state; const n=r.shots.length;
+  document.getElementById("lcdState").innerHTML=r.state==="idle"?"Ready":r.state==="standby"?"Standby":`<span class="dot">●</span> Listening`;
+  document.getElementById("sN").textContent=n; document.getElementById("sF").textContent=n?f2(r.shots[0]):"–";
+  document.getElementById("sS").textContent=n>1?f2(r.shots[n-1]-r.shots[n-2]):"–";
+  if(r.state==="idle") document.getElementById("digits").innerHTML=n?f2(r.shots[n-1]):`<span class="ghost">0.00</span>`;
+  const list=document.getElementById("shotList");
+  list.innerHTML=n?r.shots.map((t,i)=>`<li><span class="n">#${i+1}</span><span class="t">${f2(t)}</span><span class="s">${i?"+"+f2(t-r.shots[i-1]):"first"}</span><span></span></li>`).reverse().join(""):`<li class="empty">Shots appear here with their split times.</li>`;}
+function tick(){const r=S.run; if(!r||r.state==="idle")return; const el=document.getElementById("digits");
+  if(el){ if(r.state==="standby") el.textContent="– –";
+    else {const n=r.shots.length; const now=Audio_.ctx.currentTime-r.beepAt; el.textContent=f2(Math.max(0,now));}}
+  if(r.state==="standby"&&Audio_.ctx.currentTime>=r.beepAt){r.state="live";drawTimer();drawControls();}
+  if(r.state==="live"&&r.shots.length&&Audio_.ctx.currentTime-r.beepAt-r.shots[r.shots.length-1]>8){finishRun();return;}
+  if(r.state==="live"&&!r.shots.length&&Audio_.ctx.currentTime-r.beepAt>30){finishRun();return;}
+  r.raf=requestAnimationFrame(tick);}
+async function startRun(){
+  const r=S.run; await ensureCtx(); if(Audio_.micOK!==true) await ensureMic(); applyDetectorSettings();
+  const st=DB.settings; const delay=st.randomDelay?st.delayMin+Math.random()*(st.delayMax-st.delayMin):st.delayMin;
+  await ensureCtx(); const ctx=Audio_.ctx; r.shots=[]; r.state="standby"; r.beepAt=ctx.currentTime+delay; r.nodes=beep(r.beepAt);
+  const mutes=[]; if(st.parBeep&&r.par){r.nodes.push(...beep(r.beepAt+r.par,.25,st.beepHz*0.75));mutes.push([r.beepAt+r.par-.02,r.beepAt+r.par+.3]);}
+  if(Audio_.post) Audio_.post({armAt:r.beepAt+.32,mutes});
+  Audio_.onShot=t=>{if(S.run!==r||r.state==="idle")return; addShot(t-r.beepAt);};
+  keepAwake(true); drawTimer(); drawControls(); cancelAnimationFrame(r.raf); r.raf=requestAnimationFrame(tick);
+}
+function addShot(t){const r=S.run; if(t<0)return; r.shots.push(+t.toFixed(3)); drawTimer();
+  const d=r.drillId&&byId(r.drillId); if(DB.settings.autoStop&&d&&r.shots.length>=d.rounds) setTimeout(()=>{if(S.run===r&&r.state!=="idle")finishRun();},150);}
+function finishRun(){const r=S.run; cancelAnimationFrame(r.raf); if(Audio_.post)Audio_.post({disarm:true}); Audio_.onShot=null;
+  const wasStandby=r.state==="standby"; r.state="idle"; keepAwake(false);
+  (r.nodes||[]).forEach(o=>{try{o.stop()}catch(e){}}); r.nodes=[];
+  if(wasStandby||!r.shots.length){ drawTimer();drawControls(); if(!wasStandby)toast("No shots detected"); return;}
+  const d=r.drillId&&byId(r.drillId);
+  const score=d&&d.scoring==="zones"?{A:r.shots.length,C:0,D:0,M:0}:{H:r.shots.length,M:0};
+  S.review={drillId:r.drillId,shots:r.shots.slice(),score,notes:"",start:startPos(),date:Date.now()};
+  go("review");}
+let meterOn=false;
+function startMeter(){meterOn=true; Audio_.onLevel=lv=>{const b=document.getElementById("mBar"); if(b)b.style.width=Math.min(100,lv*100)+"%";};}
+function stopMeter(){meterOn=false; Audio_.onLevel=null;}
+
+/* ---- Review ---- */
+function vReview(){
+  const rv=S.review; const d=rv.drillId&&byId(rv.drillId); const m=compute(rv);
+  const par=d?d.par[rv.start]:null;
+  const zoneUI=!d?"":d.scoring==="zones"
+    ?`<div class="stepper">${["A","C","D","M"].map(z=>`<div class="zone ${z==="M"?"miss":""}"><div class="z">${z==="M"?"MISS":z}</div><div class="v">${rv.score[z]}</div><div class="pm"><button type="button" data-z="${z}" data-d="-1" aria-label="Minus ${z}">−</button><button type="button" data-z="${z}" data-d="1" aria-label="Plus ${z}">+</button></div></div>`).join("")}</div>`
+    :`<div class="stepper two">${["H","M"].map(z=>`<div class="zone ${z==="M"?"miss":""}"><div class="z">${z==="M"?"MISS":"HIT"}</div><div class="v">${rv.score[z]}</div><div class="pm"><button type="button" data-z="${z}" data-d="-1" aria-label="Minus">−</button><button type="button" data-z="${z}" data-d="1" aria-label="Plus">+</button></div></div>`).join("")}</div>`;
+  const hitsEntered=d?(d.scoring==="zones"?rv.score.A+rv.score.C+rv.score.D+rv.score.M:rv.score.H+rv.score.M):0;
+  const timeCls=par&&m.time<=par?"good":par?"bad":"";
+  app.innerHTML=`<div class="top"></div>`+`<div class="stack">
+    <div><span class="eyebrow">Review run</span><h2 style="margin-top:4px">${d?d.name:"Free timer"}</h2></div>
+    <div class="results">
+      <div><span>${d&&d.penaltySec?"Time + pen.":"Time"}</span><b class="${timeCls}">${f2(m.time)}</b></div>
+      <div><span>First shot</span><b>${f2(m.first)}</b></div>
+      <div><span>Avg split</span><b>${f2(m.avgSplit)}</b></div>
+      ${d&&d.scoring==="zones"?`<div><span>Points</span><b>${m.points}</b></div><div><span>Hit factor</span><b>${m.hf.toFixed(3)}</b></div>`:`<div><span>Hits</span><b>${d?pct(m.acc):"–"}</b></div><div><span>Split spread</span><b>${f2(m.spread)}</b></div>`}
+      <div><span>Par</span><b>${par?par.toFixed(1):"–"}</b></div></div>
+    ${d?`<div class="stack"><div class="spread"><h3>Score your target</h3><span class="muted" style="font-size:14px">${hitsEntered} of ${d.rounds} rounds</span></div>${zoneUI}</div>`:""}
+    <div class="stack"><div class="spread"><h3>Shots</h3><span class="muted" style="font-size:14px">Tap × to drop a false shot</span></div>
+      <ul class="shots">${rv.shots.map((t,i)=>`<li><span class="n">#${i+1}</span><span class="t">${f2(t)}</span><span class="s">${i?"+"+f2(t-rv.shots[i-1]):"first"}</span><button type="button" data-rm="${i}" aria-label="Remove shot ${i+1}">×</button></li>`).join("")}</ul></div>
+    <label class="f" for="notes">Notes<textarea id="notes" placeholder="What to fix next run: grip, trigger, eyes…">${esc(rv.notes)}</textarea></label>
+    ${d?`<button class="btn bigbtn" type="button" data-act="save">Save run</button>`:`<button class="btn bigbtn" type="button" data-act="discard">Done</button>`}
+    ${d?`<div class="row"><button class="btn alt small" type="button" data-act="save-again">Save and run again</button><button class="btn ghost small" type="button" data-act="discard">Discard</button></div>`:""}
+  </div>`;
+  document.getElementById("notes").addEventListener("input",e=>rv.notes=e.target.value);
+}
+function saveReview(){const rv=S.review; DB.sessions.push({id:"s"+Date.now(),drillId:rv.drillId,date:rv.date,start:rv.start,shots:rv.shots,score:rv.score,notes:rv.notes});
+  save(); toast(storageOK?"Run saved":"Saved for this visit only; storage is blocked");}
+
+/* ---- Progress ---- */
+function vProgress(){
+  const withRuns=DRILLS.filter(d=>sessionsFor(d.id).length);
+  if(!S.progressDrill||!byId(S.progressDrill)) S.progressDrill=(withRuns[0]||DRILLS[0]).id;
+  const d=byId(S.progressDrill); const ss=sessionsFor(d.id); const ms=ss.map(compute);
+  const opts=DRILLS.map(x=>`<option value="${x.id}" ${x.id===d.id?"selected":""}>${x.name}${sessionsFor(x.id).length?` (${sessionsFor(x.id).length})`:""}</option>`).join("");
+  const anySample=DB.sessions.some(s=>s.sample);
+  let body;
+  if(!ss.length) body=`<p class="note">No runs logged for ${d.name} yet. Shoot it from the Drills tab and your times will chart here.</p>`;
+  else{
+    const times=ms.map(m=>m.time); const best=Math.min(...times); const last5=times.slice(-5); const avg5=last5.reduce((a,b)=>a+b,0)/last5.length;
+    const second=d.scoring==="zones"?ms.map(m=>m.hf):ms.map(m=>m.acc*100);
+    const bestSecond=d.scoring==="zones"?Math.max(...second).toFixed(2):Math.round(Math.max(...second))+"%";
+    body=`<div class="stats"><div class="stat"><span>Runs</span><b>${ss.length}</b></div><div class="stat"><span>Best</span><b>${f2(best)}</b></div>
+      <div class="stat"><span>Last 5 avg</span><b>${f2(avg5)}</b></div><div class="stat"><span>${d.scoring==="zones"?"Best HF":"Best hits"}</span><b>${bestSecond}</b></div></div>
+      <div class="card stack"><div class="spread"><h3>${d.penaltySec?"Time with penalties":"Time"}</h3><span class="muted" style="font-size:13px">seconds · lower is better</span></div><div class="chart" id="c1"></div></div>
+      <div class="card stack"><div class="spread"><h3>${d.scoring==="zones"?"Hit factor":"Hits"}</h3><span class="muted" style="font-size:13px">${d.scoring==="zones"?"points ÷ time · higher is better":"percent of rounds on target"}</span></div><div class="chart" id="c2"></div></div>
+      <div class="card stack"><div class="spread"><h3>First shot</h3><span class="muted" style="font-size:13px">seconds from the beep</span></div><div class="chart" id="c3"></div></div>
+      <div><h3 style="margin-bottom:4px">Runs</h3><ul class="hist">${ss.slice().reverse().map(s=>{const m=compute(s);return `<li>
+        <span class="d">${new Date(s.date).toLocaleDateString(undefined,{month:"short",day:"numeric"})}${s.sample?` <span class="tag">sample</span>`:""}<small>${s.start==="holster"?"Holster":"Low ready"}${s.notes?" · "+esc(s.notes):""}</small></span>
+        <span class="num">${f2(m.time)}</span><span class="num muted">${m.type==="zones"?m.hf.toFixed(2)+" HF":pct(m.acc)}</span>
+        ${S.confirmDel===s.id?`<span class="confirm"><button type="button" data-del="${s.id}" style="color:var(--bad);font-weight:700;font-size:14px">Delete</button></span>`:`<button type="button" data-ask="${s.id}" aria-label="Delete run">×</button>`}</li>`}).join("")}</ul></div>`;}
+  app.innerHTML=header("Progress")+`<div class="stack">
+    ${anySample?`<p class="banner">Sample runs are loaded so you can see how charts look. Clear them in Settings once you log your own.</p>`:""}
+    <label class="f" for="pDrill">Drill<select id="pDrill">${opts}</select></label>${body}</div>`;
+  document.getElementById("pDrill").addEventListener("change",e=>{S.progressDrill=e.target.value;S.confirmDel=null;render();});
+  if(ss.length){const par=d.par[ss[ss.length-1].start||"lowready"];
+    lineChart("c1",ss,ms.map(m=>m.time),{ref:par,refLabel:"par",fmt:v=>v.toFixed(2)+" s",lowerBetter:true});
+    lineChart("c2",ss,d.scoring==="zones"?ms.map(m=>m.hf):ms.map(m=>m.acc*100),{fmt:d.scoring==="zones"?v=>v.toFixed(2):v=>Math.round(v)+"%",max:d.scoring==="zones"?null:100});
+    lineChart("c3",ss,ms.map(m=>m.first),{fmt:v=>v.toFixed(2)+" s",lowerBetter:true});}
+}
+function niceTicks(min,max,count){const span=max-min||1;const step0=span/count;const mag=Math.pow(10,Math.floor(Math.log10(step0)));
+  const step=[1,2,2.5,5,10].map(s=>s*mag).find(s=>s>=step0);const lo=Math.floor(min/step)*step,hi=Math.ceil(max/step)*step;const t=[];for(let v=lo;v<=hi+1e-9;v+=step)t.push(+v.toFixed(6));return t;}
+function lineChart(id,ss,vals,o){
+  const el=document.getElementById(id); const W=420,H=170,L=40,R=10,T=14,B=26;
+  let lo=Math.min(...vals,o.ref??Infinity),hi=Math.max(...vals,o.ref??-Infinity); if(o.max!=null)hi=Math.max(hi,o.max);
+  const pad=(hi-lo)*.12||hi*.1||1; lo=Math.max(0,lo-pad); hi=o.max!=null?o.max:hi+pad; let ticks=niceTicks(lo,hi,4); if(o.max!=null)ticks=ticks.filter(t=>t<=o.max); lo=ticks[0]; hi=o.max!=null?o.max:ticks[ticks.length-1];
+  const n=vals.length; const x=i=>n===1?L+(W-L-R)/2:L+i*(W-L-R)/(n-1); const y=v=>T+(H-T-B)*(1-(v-lo)/(hi-lo));
+  const grid=ticks.map(t=>`<line x1="${L}" x2="${W-R}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)" stroke-width="1"/><text x="${L-6}" y="${y(t)+4}" text-anchor="end" font-size="13" fill="var(--muted)" font-family="Share Tech Mono,monospace">${+t.toFixed(2)}</text>`).join("");
+  const path=vals.map((v,i)=>`${i?"L":"M"}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join("");
+  const area=n>1?`<path d="${path}L${x(n-1)},${H-B}L${x(0)},${H-B}Z" fill="var(--accent)" opacity=".10"/>`:"";
+  const ref=o.ref!=null?`<line x1="${L}" x2="${W-R}" y1="${y(o.ref)}" y2="${y(o.ref)}" stroke="var(--ink2)" stroke-dasharray="4 4" stroke-width="1.25"/><text x="${W-R}" y="${y(o.ref)-5}" text-anchor="end" font-size="13" fill="var(--ink2)">${o.refLabel} ${o.ref}</text>`:"";
+  const dateLbl=i=>new Date(ss[i].date).toLocaleDateString(undefined,{month:"short",day:"numeric"});
+  const xl=n>1?`<text x="${x(0)}" y="${H-6}" font-size="13" fill="var(--muted)">${dateLbl(0)}</text><text x="${x(n-1)}" y="${H-6}" font-size="13" text-anchor="end" fill="var(--muted)">${dateLbl(n-1)}</text>`:"";
+  const dots=vals.map((v,i)=>`<circle cx="${x(i)}" cy="${y(v)}" r="${i===n-1?5:3.5}" fill="${i===n-1?"var(--accent)":"var(--surface)"}" stroke="var(--accent)" stroke-width="2"/>`).join("");
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Chart of ${n} runs">${grid}${ref}${area}<path d="${path}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round"/>${xl}
+    <line id="${id}x" y1="${T}" y2="${H-B}" stroke="var(--ink2)" stroke-width="1" opacity="0"/>${dots}<rect x="${L}" y="0" width="${W-L-R}" height="${H}" fill="transparent" id="${id}hit"/></svg><div class="tip" hidden></div>`;
+  const svg=el.querySelector("svg"),tip=el.querySelector(".tip"),cross=document.getElementById(id+"x");
+  const show=e=>{const r=svg.getBoundingClientRect();const px=(e.clientX-r.left)*W/r.width;
+    let i=n===1?0:Math.round((px-L)/((W-L-R)/(n-1)));i=Math.max(0,Math.min(n-1,i));
+    cross.setAttribute("x1",x(i));cross.setAttribute("x2",x(i));cross.setAttribute("opacity",".5");
+    tip.hidden=false;tip.style.left=(x(i)*r.width/W)+"px";tip.style.top=(y(vals[i])*r.height/H)+"px";
+    tip.innerHTML=`${dateLbl(i)}<br><b>${o.fmt(vals[i])}</b>`;};
+  const hide=()=>{tip.hidden=true;cross.setAttribute("opacity","0");};
+  svg.addEventListener("pointermove",show);svg.addEventListener("pointerdown",show);svg.addEventListener("pointerleave",hide);
+}
+
+/* ---- Settings ---- */
+function vSettings(){const st=DB.settings; const samples=DB.sessions.filter(s=>s.sample).length;
+  app.innerHTML=header("Settings")+`<div class="stack">
+  <div class="card">
+    <div class="set"><h3>Shot detection</h3><p class="muted" style="font-size:14px">Tap Test, then fire or clap. The bar should cross the orange line on each shot and stay under it otherwise.</p>
+      <div class="lcd" style="padding:12px 14px"><div class="status"><span id="micState">${Audio_.micOK?"Mic on":"Mic off"}</span><span>Level</span></div><div class="meter"><i id="mBar"></i><span class="th" id="mTh"></span></div></div>
+      <button class="btn alt small" type="button" data-act="mictest">Test microphone</button></div>
+    <div class="set"><div class="spread"><label for="sens">Sensitivity</label><b id="sensV">${st.sensitivity}</b></div>
+      <input type="range" id="sens" min="1" max="10" step="1" value="${st.sensitivity}"><p class="muted" style="font-size:14px">Lower it if wind or steel ringing registers as shots. Raise it for suppressed or .22 guns.</p></div>
+    <div class="set"><div class="spread"><label for="echo">Echo rejection</label><b id="echoV">${st.echoMs} ms</b></div>
+      <input type="range" id="echo" min="30" max="250" step="10" value="${st.echoMs}"><p class="muted" style="font-size:14px">Sounds this soon after a shot are ignored. Raise it in a covered bay or near berms that echo.</p></div>
+  </div>
+  <div class="card">
+    <div class="set"><h3>Start signal</h3>
+      <label class="switch" for="rnd"><span>Random delay</span><input type="checkbox" id="rnd" ${st.randomDelay?"checked":""}></label></div>
+    <div class="set"><div class="spread"><label for="dmin">${st.randomDelay?"Shortest delay":"Delay"}</label><b id="dminV">${st.delayMin} s</b></div><input type="range" id="dmin" min="0" max="5" step=".5" value="${st.delayMin}"></div>
+    ${st.randomDelay?`<div class="set"><div class="spread"><label for="dmax">Longest delay</label><b id="dmaxV">${st.delayMax} s</b></div><input type="range" id="dmax" min="1" max="8" step=".5" value="${st.delayMax}"></div>`:""}
+    <div class="set"><label class="f" for="hz">Beep tone<select id="hz">${[[1800,"Low 1.8 kHz"],[2400,"Standard 2.4 kHz"],[3000,"High 3.0 kHz"]].map(([v,l])=>`<option value="${v}" ${+st.beepHz===v?"selected":""}>${l}</option>`).join("")}</select></label>
+      <button class="btn alt small" type="button" data-act="testbeep">Play beep</button></div>
+    <div class="set"><label class="switch" for="parb"><span>Par beep at par time</span><input type="checkbox" id="parb" ${st.parBeep?"checked":""}></label></div>
+    <div class="set"><label class="switch" for="auto"><span>Stop after the drill's round count</span><input type="checkbox" id="auto" ${st.autoStop?"checked":""}></label></div>
+    <div class="set"><span>Default start position</span><div class="seg" role="group"><button type="button" data-defpos="lowready" aria-pressed="${st.start==="lowready"}">Low ready</button><button type="button" data-defpos="holster" aria-pressed="${st.start==="holster"}">Holster</button></div></div>
+  </div>
+  <p class="note"><b>Bluetooth earbuds delay the beep</b>, often by 0.1 to 0.3 s, which inflates your first-shot time. Use the phone speaker, and turn the ringer volume up.</p>
+  <div class="card">
+    <div class="set"><h3>Your data</h3><p class="muted" style="font-size:14px">${DB.sessions.length-samples} runs logged on this phone.${storageOK?"":" Storage is blocked here, so runs last only until you close the page."}</p>
+      <div class="row"><button class="btn alt small" type="button" data-act="export">Copy backup</button><button class="btn alt small" type="button" data-act="download">Download backup</button></div>
+      <label class="f" for="imp">Restore from backup<textarea id="imp" placeholder="Paste a backup here"></textarea></label>
+      <button class="btn alt small" type="button" data-act="import">Restore</button></div>
+    ${samples?`<div class="set"><button class="btn ghost small" type="button" data-act="clearsamples">Clear ${samples} sample runs</button></div>`:""}
+  </div></div>`;
+  const th=document.getElementById("mTh"); th.style.left=(thresholdFor(st.sensitivity)*100)+"%";
+  const bind=(id,key,fmt,num=true)=>{const el=document.getElementById(id);if(!el)return;el.addEventListener("input",()=>{st[key]=num?+el.value:el.value;const v=document.getElementById(id+"V");if(v)v.textContent=fmt(st[key]);
+    if(key==="delayMin"&&st.delayMax<st.delayMin){st.delayMax=st.delayMin;}
+    th.style.left=(thresholdFor(st.sensitivity)*100)+"%";applyDetectorSettings();save();});};
+  bind("sens","sensitivity",v=>v); bind("echo","echoMs",v=>v+" ms"); bind("dmin","delayMin",v=>v+" s"); bind("dmax","delayMax",v=>v+" s");
+  document.getElementById("hz").addEventListener("change",e=>{st.beepHz=+e.target.value;save();});
+  [["rnd","randomDelay",true],["parb","parBeep"],["auto","autoStop"]].forEach(([id,k,rerender])=>document.getElementById(id).addEventListener("change",e=>{st[k]=e.target.checked;
+    if(k==="randomDelay"&&st.delayMax<st.delayMin)st.delayMax=st.delayMin;save();if(rerender)render();}));
+  startMeter();
+}
+function backupText(){return JSON.stringify({app:"par-time",version:1,exported:new Date().toISOString(),sessions:DB.sessions.filter(s=>!s.sample),settings:DB.settings});}
+
+/* ---------------- Events ---------------- */
+app.addEventListener("click",async e=>{
+  const b=e.target.closest("button"); if(!b)return;
+  if(b.dataset.filter){S.filter=b.dataset.filter;render();return;}
+  if(b.dataset.drill){go("drill",{drillId:b.dataset.drill});return;}
+  if(b.dataset.pos){S.start=b.dataset.pos;render();return;}
+  if(b.dataset.defpos){DB.settings.start=b.dataset.defpos;S.start=null;save();render();return;}
+  if(b.dataset.z){const rv=S.review;const z=b.dataset.z;rv.score[z]=Math.max(0,rv.score[z]+(+b.dataset.d));render();return;}
+  if(b.dataset.rm!=null){S.review.shots.splice(+b.dataset.rm,1);render();return;}
+  if(b.dataset.ask){S.confirmDel=b.dataset.ask;render();return;}
+  if(b.dataset.del){DB.sessions=DB.sessions.filter(s=>s.id!==b.dataset.del);S.confirmDel=null;save();render();toast("Run deleted");return;}
+  const a=b.dataset.act; if(!a)return;
+  if(a==="drills")go("drills");
+  else if(a==="free"){S.run=newRun(null);go("timer");}
+  else if(a.startsWith("run-")){S.run=newRun(a.slice(4));go("timer");}
+  else if(a.startsWith("prog-")){S.progressDrill=a.slice(5);go("progress");}
+  else if(a==="drill-back"){const r=S.run;if(r&&r.state!=="idle"){r.shots=[];finishRun();}go("drill",{drillId:r.drillId});}
+  else if(a==="start"){await startRun();}
+  else if(a==="stop"){finishRun();}
+  else if(a==="tapshot"){const r=S.run;if(r.state==="live")addShot(Audio_.ctx.currentTime-r.beepAt);}
+  else if(a==="save"||a==="save-again"){saveReview();const id=S.review.drillId;S.review=null;
+    if(a==="save-again"){S.run=newRun(id);go("timer");}else{S.progressDrill=id;S.run=newRun(id);go("drill",{drillId:id});}}
+  else if(a==="discard"||a==="review-discard"){const id=S.review&&S.review.drillId;S.review=null;S.run=newRun(id);go("timer");}
+  else if(a==="testbeep"){await ensureCtx();beep(Audio_.ctx.currentTime+.05);}
+  else if(a==="mictest"){const ok=await ensureMic();const ms=document.getElementById("micState");if(ms)ms.textContent=ok?"Mic on":"Mic blocked";if(!ok)toast("Microphone is blocked");}
+  else if(a==="export"){const t=backupText();try{await navigator.clipboard.writeText(t);toast("Backup copied");}catch(err){const ta=document.getElementById("imp");ta.value=t;ta.select();toast("Select all and copy");}}
+  else if(a==="download"){const blob=new Blob([backupText()],{type:"application/json"});const u=URL.createObjectURL(blob);const l=document.createElement("a");l.href=u;l.download="par-time-backup-"+new Date().toISOString().slice(0,10)+".json";document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);}
+  else if(a==="import"){try{const d=JSON.parse(document.getElementById("imp").value);if(!Array.isArray(d.sessions))throw 0;
+      const ids=new Set(DB.sessions.map(s=>s.id));let added=0;d.sessions.forEach(s=>{if(!ids.has(s.id)&&byId(s.drillId)){DB.sessions.push(s);added++;}});
+      save();render();toast(`Restored ${added} runs`);}catch(err){toast("That text is not a Par Time backup");}}
+  else if(a==="clearsamples"){DB.sessions=DB.sessions.filter(s=>!s.sample);save();render();toast("Sample runs cleared");}
+});
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&S.run&&S.run.state!=="idle")keepAwake(true);});
+
+load(); render();
+</script>
+
+</body>
+</html>
