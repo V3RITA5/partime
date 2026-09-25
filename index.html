@@ -186,6 +186,13 @@ label.f{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:14p
 .qtable th{text-align:left;font:600 11px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:6px 4px;border-bottom:1px solid var(--line)}
 .qtable td{padding:8px 4px;border-bottom:1px solid var(--line);vertical-align:middle}
 label.switch.card{gap:14px}
+.seg.three{grid-template-columns:repeat(3,1fr)}
+.ladder{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.ladder button{border:1.5px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--ink2)}
+.ladder button span{font:600 11px var(--body);letter-spacing:.08em;text-transform:uppercase}
+.ladder button b{font-size:20px;color:var(--ink)}
+.ladder button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.ladder button[aria-pressed="true"] span{color:var(--accent)}
 /* free timer */
 .parset{display:grid;grid-template-columns:1fr 1fr 1.6fr 1fr 1fr;gap:6px;align-items:center}
 .parset button{border:0;background:var(--sunk);border-radius:9px;height:44px;font:700 16px var(--body)}
@@ -257,7 +264,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:32px}
 
 <script>
 "use strict";
-const APP_VERSION="1.5 · Sep 25";
+const APP_VERSION="1.6 · Sep 25";
 /* ---------------- Drill library ---------------- */
 // scoring: "zones" = A/C/D/Miss, points 5/3/1/0, -10 per miss (USPSA minor-style), hit factor = points / time
 //          "hits"  = hit or miss on a defined zone; misses add penaltySec to the time
@@ -272,7 +279,7 @@ const DRILLS = [
   why:"Two 5-shot strings with a transition, a slide-lock reload, then 3 precise shots on the smallest zone. The last three are the hardest: at close range you have to hold over for sight offset, which is easy to forget when you're rushing.",
   steps:["One IPSC target at 5 meters. The original allows 3, 5, or 7 meters.","Load three magazines: 10 rounds in the gun, 3 rounds in the second, the third full.","On the beep, fire 5 shots in the left-side C-zone.","Transition and fire 5 shots in the right-side C-zone.","The gun locks open. Reload with the 3-round magazine.","Fire 3 shots in the A-zone head box.","Reload with the full magazine and scan. A clean run under 9 seconds is the standard."],
   lowready:"Start at low ready. Keep the reloads from your belt."},
- {id:"fast",skill:"Cold Start",name:"FAST",rounds:6,dist:"7 yd",target:"1 IPSC target",zone:"Head box A, then body A",par:{holster:7,lowready:6},scoring:"hits",penaltySec:2,
+ {id:"fast",skill:"Cold Start",name:"FAST",rounds:6,dist:"7 yd",target:"1 IPSC target",zone:"Head box A, then body A",par:{holster:7,lowready:6},levels:{holster:{beginner:14,intermediate:10},lowready:{beginner:12,intermediate:8.5}},scoring:"hits",penaltySec:2,
   credit:"Fundamentals, Accuracy & Speed Test, created by Todd Green. His version uses a 3×5 card and an 8″ circle, so IPSC times won't compare directly with published FAST ratings.",
   why:"Tests the draw, a precise pair, a reload, and a fast string in one short run.",
   steps:["One IPSC target at 7 yards.","Start with 2 rounds in the gun and a spare magazine, so the reload is from slide lock.","On the beep, fire 2 shots on the A-zone head box.","Reload.","Fire 4 shots on the body A-zone.","Each shot outside its zone adds 2 seconds."],
@@ -400,11 +407,19 @@ const DRILLS = [
    {name:"All-inclusive transition",dist:"25 yd",start:"ready",rounds:3,strings:1,par:8.0,text:"Fire 1 rifle round. Transition to the pistol and fire 1 round. Tac reload the pistol and holster it. Recover the rifle, reload it, and fire 1 round."}]},
 ];
 const byId = id => DRILLS.find(d=>d.id===id);
+const LEVELS=[["beginner","Beginner"],["intermediate","Intermediate"],["advanced","Advanced"]];
+const LEVEL_MULT={beginner:2.0,intermediate:1.4,advanced:1};
+const lvName=l=>(LEVELS.find(x=>x[0]===l)||LEVELS[1])[1];
+function parOf(d,pos,level){level=level||(typeof DB!=="undefined"&&DB.settings.level)||"intermediate";pos=pos||"lowready";
+  const adv=d.par[pos]; if(level==="advanced") return adv;
+  if(d.levels&&d.levels[pos]&&d.levels[pos][level]!=null) return d.levels[pos][level];
+  const v=adv*LEVEL_MULT[level]; return v<10?Math.round(v*10)/10:Math.round(v*2)/2;}
+function levelSeg(){const l=DB.settings.level;return `<div class="seg three" role="group" aria-label="Skill level">${LEVELS.map(([k,n])=>`<button type="button" data-level="${k}" aria-pressed="${l===k}">${n}</button>`).join("")}</div>`;}
 
 /* ---------------- Storage ---------------- */
 const KEY="partime.v1";
 let storageOK=true;
-const DEFAULT_SETTINGS={delayMin:1.5,delayMax:4,randomDelay:true,sensitivity:6,echoMs:80,beepHz:2400,autoStop:true,parBeep:true,start:"lowready",theme:"system",freeMode:"live",freeParOn:false,freePar:2.0,dryRepeat:false,dryGap:3,timerSource:"phone"};
+const DEFAULT_SETTINGS={delayMin:1.5,delayMax:4,randomDelay:true,sensitivity:6,echoMs:80,beepHz:2400,autoStop:true,parBeep:true,start:"lowready",theme:"system",freeMode:"live",freeParOn:false,freePar:2.0,dryRepeat:false,dryGap:3,timerSource:"phone",level:"intermediate"};
 let DB={sessions:[],settings:{...DEFAULT_SETTINGS},seeded:false};
 function load(){
   try{const raw=localStorage.getItem(KEY); if(raw){const d=JSON.parse(raw); DB={sessions:d.sessions||[],settings:{...DEFAULT_SETTINGS,...(d.settings||{})},seeded:!!d.seeded,plans:d.plans,play:d.play||null};}}
@@ -662,7 +677,7 @@ function addToPlanUI(id){
   return `<div class="card stack"><h3>Add to which plan?</h3><div class="row">${(DB.plans||[]).map(pl=>`<button class="btn alt small" type="button" data-addto="${pl.id}" data-did="${id}">${esc(pl.name)}</button>`).join("")}
     <button class="btn small" type="button" data-addto="new" data-did="${id}">New plan</button></div></div>`;}
 function vManual(){
-  const d=byId(S.manualDrill); const pos=d.fixedStart||startPos(); const par=d.par[pos];
+  const d=byId(S.manualDrill); const pos=d.fixedStart||startPos(); const par=parOf(d,pos);
   app.innerHTML=header("",playFor(d.id)?"play":"manual-back")+`<div class="stack">${planBanner(d.id)}
     <div class="spread"><div><span class="eyebrow">${d.skill} · your own timer</span><h2 style="margin-top:4px">${d.name}</h2></div><span class="tag">${d.rounds} rd · par ${par.toFixed(1)}</span></div>
     <div class="card stack"><p class="muted" style="font-size:15px">Shoot the drill on your timer, then read the numbers off its review screen.</p>
@@ -727,7 +742,7 @@ function vPlay(){
     return;}
   const it=curItem(),d=byId(it.drillId);
   const pos=d.fixedStart||startPos();
-  const spec=d.qual?`${d.rounds} rd · ${d.stages.length} stages · ${d.pass}/${d.max} to pass`:`${d.gun?d.gun+" · ":""}${d.rounds} rd · ${d.dist} · ${d.zone} · par ${d.par[pos].toFixed(1)}`;
+  const spec=d.qual?`${d.rounds} rd · ${d.stages.length} stages · ${d.pass}/${d.max} to pass`:`${d.gun?d.gun+" · ":""}${d.rounds} rd · ${d.dist} · ${d.zone} · par ${parOf(d,pos).toFixed(1)}`;
   const thisRuns=it.runs.map(id=>DB.sessions.find(s=>s.id===id)).filter(Boolean);
   const more=it.done<it.reps;
   app.innerHTML=header("","plans")+`<div class="stack">
@@ -773,10 +788,11 @@ function vDrills(){
     return `<div class="group-h"><h2>${skill}</h2><span class="count">${ds.length}</span></div>`+ds.map(d=>{
       const runs=sessionsFor(d.id).length;
       return `<button class="drill" type="button" data-drill="${d.id}"><span class="name">${d.name}</span>
-        ${d.qual?`<span class="par"><b>${d.pass}</b><span>to pass</span></span>`:`<span class="par"><b>${d.par[startPos()].toFixed(1)}</b><span>par s</span></span>`}
+        ${d.qual?`<span class="par"><b>${d.pass}</b><span>to pass</span></span>`:`<span class="par"><b>${parOf(d,startPos()).toFixed(1)}</b><span>par s</span></span>`}
         <span class="meta">${d.gun?d.gun+" · ":""}${d.rounds} rd · ${d.qual?d.stages.length+" stages · ":""}${d.dist} · ${d.zone}${runs?` · <span class="tag hot">${runs} run${runs>1?"s":""}</span>`:""}</span></button>`;}).join("");}).join("");
   app.innerHTML=`<div class="top"><div class="brand">${LOGO.replace(/width="34" height="34"/,'width="50" height="50"')}<div class="wm"><span class="wm-name">VERIT<span class="lam" aria-hidden="true">V</span><span class="sr">Λ</span>S</span><span class="wm-sub">Range</span></div></div></div>`+`<div class="stack">
-    <p class="note"><b>Range plan:</b> run one Cold Start drill first, before you warm up. Then pick one skill for the session and run its drill 5 to 10 times. Par times shown are for a <b>${startPos()==="holster"?"holster":"low ready"}</b> start.</p>
+    <p class="note"><b>Range plan:</b> run one Cold Start drill first, before you warm up. Then pick one skill for the session and run its drill 5 to 10 times. Par times shown are for a <b>${startPos()==="holster"?"holster":"low ready"}</b> start at <b>${lvName(DB.settings.level).toLowerCase()}</b> level.</p>
+    ${levelSeg()}
     <div class="chips" role="group" aria-label="Filter by skill">${chips}</div>${groups}
     <button class="btn ghost" type="button" data-act="free">Open the free timer</button></div>`;
 }
@@ -788,7 +804,9 @@ function vDrill(){
   app.innerHTML=header("",`drills`)+`<div class="stack">
     <div><span class="eyebrow">${d.skill}</span><h1 style="margin-top:6px">${d.name}</h1></div>
     <div class="spec"><div><b>${d.rounds}</b><span>Rounds</span></div><div><b>${d.dist}</b><span>Distance</span></div>
-      <div><b>${d.par[pos].toFixed(1)}</b><span>Par s</span></div><div><b>${best!=null?f2(best):"–"}</b><span>Best</span></div></div>
+      <div><b>${parOf(d,pos).toFixed(1)}</b><span>Par s</span></div><div><b>${best!=null?f2(best):"–"}</b><span>Best</span></div></div>
+    <div class="ladder" role="group" aria-label="Par by level">${LEVELS.map(([k,n])=>`<button type="button" data-level="${k}" aria-pressed="${DB.settings.level===k}"><span>${n}</span><b class="mono">${parOf(d,pos,k).toFixed(1)}</b></button>`).join("")}</div>
+    ${d.standard&&DB.settings.level!=="advanced"?`<p class="muted" style="font-size:14px">The published standard is ${parOf(d,pos,"advanced").toFixed(1)} s. PASS at your level is a step toward it.</p>`:""}
     <p>${d.why}</p>
     <div class="card stack"><h3>Setup and course of fire</h3><p class="muted">${d.target} · aim: ${d.zone}</p>
       <ol class="steps">${d.steps.map(s=>`<li>${s}</li>`).join("")}</ol>
@@ -803,12 +821,12 @@ function vDrill(){
     <button class="back" type="button" data-act="run-${d.id}">Use the phone's timer instead</button>`
     :`<button class="btn bigbtn" type="button" data-act="run-${d.id}">Shoot this drill</button>
     <button class="back" type="button" data-act="manual-${d.id}">Using your own shot timer? Enter times instead</button>`}
-    <button class="btn ghost" type="button" data-act="dry-${d.id}">Dry fire at ${d.par[pos].toFixed(1)} s par</button>
+    <button class="btn ghost" type="button" data-act="dry-${d.id}">Dry fire at ${parOf(d,pos).toFixed(1)} s par</button>
     ${addToPlanUI(d.id)}</div>`;
 }
 
 /* ---- Timer ---- */
-function newRun(drillId){const dd=drillId&&byId(drillId);return {drillId,state:"idle",beepAt:0,shots:[],par:dd?dd.par[dd.fixedStart||startPos()]:null,raf:0,timeout:0,lastShotWall:0};}
+function newRun(drillId){const dd=drillId&&byId(drillId);return {drillId,state:"idle",beepAt:0,shots:[],par:dd?parOf(dd,dd.fixedStart||startPos()):null,raf:0,timeout:0,lastShotWall:0};}
 function vTimer(){
   if(!S.run) S.run=newRun(null);
   if(S.run.qual) return vQualTimer();
@@ -892,7 +910,7 @@ function stopMeter(){meterOn=false; Audio_.onLevel=null;}
 /* ---- Review ---- */
 function vReview(){
   const rv=S.review; const d=rv.drillId&&byId(rv.drillId); const m=compute(rv);
-  const par=d?d.par[rv.start]:null;
+  const par=d?parOf(d,rv.start):null;
   const zoneUI=!d?"":d.scoring==="zones"
     ?`<div class="stepper">${["A","C","D","M"].map(z=>`<div class="zone ${z==="M"?"miss":""}"><div class="z">${z==="M"?"MISS":z}</div><div class="v">${rv.score[z]}</div><div class="pm"><button type="button" data-z="${z}" data-d="-1" aria-label="Minus ${z}">−</button><button type="button" data-z="${z}" data-d="1" aria-label="Plus ${z}">+</button></div></div>`).join("")}</div>`
     :`<p class="muted" style="font-size:14px;margin-top:-4px">Hit = inside ${esc(d.zone)}</p><div class="stepper two">${["H","M"].map(z=>`<div class="zone ${z==="M"?"miss":""}"><div class="z">${z==="M"?"MISS":"HIT"}</div><div class="v">${rv.score[z]}</div><div class="pm"><button type="button" data-z="${z}" data-d="-1" aria-label="Minus">−</button><button type="button" data-z="${z}" data-d="1" aria-label="Plus">+</button></div></div>`).join("")}</div>`;
@@ -905,7 +923,7 @@ function vReview(){
       <div><span>First shot</span><b>${f2(m.first)}</b></div>
       <div><span>Avg split</span><b>${f2(m.avgSplit)}</b></div>
       ${d&&d.scoring==="zones"?`<div><span>Points</span><b>${m.points}</b></div><div><span>Hit factor</span><b>${m.hf.toFixed(3)}</b></div>`:`<div><span>Hits</span><b>${d?pct(m.acc):"–"}</b></div><div><span>Split spread</span><b>${f2(m.spread)}</b></div>`}
-      ${d&&d.standard?`<div><span>Par ${par.toFixed(1)}</span><b class="${m.miss===0&&m.time<=par?"good":"bad"}">${m.miss===0&&m.time<=par?"PASS":"FAIL"}</b></div>`:`<div><span>Par</span><b>${par?par.toFixed(1):"–"}</b></div>`}</div>
+      ${d&&d.standard?`<div><span>${lvName(DB.settings.level).slice(0,3)}. par ${par.toFixed(1)}</span><b class="${m.miss===0&&m.time<=par?"good":"bad"}">${m.miss===0&&m.time<=par?"PASS":"FAIL"}</b></div>`:`<div><span>Par</span><b>${par?par.toFixed(1):"–"}</b></div>`}</div>
     ${d?`<div class="stack"><div class="spread"><h3>Score your target</h3><span class="muted" style="font-size:14px">${hitsEntered} of ${d.rounds} rounds</span></div>${zoneUI}</div>`:""}
     ${!rv.shots.length&&rv.manual?`<p class="note">Times entered from your own shot timer.</p>`:""}
     <div class="stack" ${!rv.shots.length&&rv.manual?"hidden":""}><div class="spread"><h3>Shots</h3><span class="muted" style="font-size:14px">${rv.src==="own"?"From your timer":"Tap × to drop a false shot"}</span></div>
@@ -920,7 +938,7 @@ function vReview(){
   </div>`;
   document.getElementById("notes").addEventListener("input",e=>rv.notes=e.target.value);
 }
-function saveReview(){const rv=S.review; const sid="s"+Date.now(); recordPlayRun(rv.drillId,sid); DB.sessions.push({id:sid,drillId:rv.drillId,date:rv.date,start:rv.start,shots:rv.shots,score:rv.score,notes:rv.notes,manual:rv.manual||undefined,src:rv.src||undefined});
+function saveReview(){const rv=S.review; const sid="s"+Date.now(); recordPlayRun(rv.drillId,sid); DB.sessions.push({id:sid,drillId:rv.drillId,date:rv.date,start:rv.start,shots:rv.shots,score:rv.score,notes:rv.notes,manual:rv.manual||undefined,src:rv.src||undefined,level:DB.settings.level});
   save(); toast(storageOK?"Run saved":"Saved for this visit only; storage is blocked");}
 
 /* ---- Progress ---- */
@@ -951,7 +969,7 @@ function vProgress(){
     <label class="f" for="pDrill">Drill<select id="pDrill">${opts}</select></label>${body}</div>`;
   document.getElementById("pDrill").addEventListener("change",e=>{S.progressDrill=e.target.value;S.confirmDel=null;render();});
   if(ss.length&&d.qual) qualCharts(d,ss);
-  else if(ss.length){const par=d.par[ss[ss.length-1].start||"lowready"];
+  else if(ss.length){const par=parOf(d,ss[ss.length-1].start||"lowready");
     lineChart("c1",ss,ms.map(m=>m.time),{ref:par,refLabel:"par",fmt:v=>v.toFixed(2)+" s",lowerBetter:true});
     lineChart("c2",ss,d.scoring==="zones"?ms.map(m=>m.hf):ms.map(m=>m.acc*100),{fmt:d.scoring==="zones"?v=>v.toFixed(2):v=>Math.round(v)+"%",max:d.scoring==="zones"?null:100});
     {const idx=ms.map((m,i)=>m.first!=null&&m.first>0?i:-1).filter(i=>i>=0); if(idx.length) lineChart("c3",idx.map(i=>ss[i]),idx.map(i=>ms[i].first),{fmt:v=>v.toFixed(2)+" s",lowerBetter:true}); else document.getElementById("c3").innerHTML='<p class="muted">Enter first-shot times to see this chart.</p>';}}
@@ -1005,6 +1023,8 @@ function vSettings(){const st=DB.settings; const samples=DB.sessions.filter(s=>s
     <div class="set"><label class="switch" for="auto"><span>Stop after the drill's round count</span><input type="checkbox" id="auto" ${st.autoStop?"checked":""}></label></div>
     <div class="set"><span>Default start position</span><div class="seg" role="group"><button type="button" data-defpos="lowready" aria-pressed="${st.start==="lowready"}">Low ready</button><button type="button" data-defpos="holster" aria-pressed="${st.start==="holster"}">Holster</button></div></div>
   </div>
+  <div class="card"><div class="set"><h3>Skill level</h3>${levelSeg()}
+    <p class="muted" style="font-size:14px">Sets the par on every drill. Advanced uses the published standards. Qualifications always use their official time limits.</p></div></div>
   <div class="card"><div class="set"><h3>Shot timer</h3>
     <div class="seg" role="group" aria-label="Shot timer"><button type="button" data-src="phone" aria-pressed="${st.timerSource!=="own"}">This phone</button><button type="button" data-src="own" aria-pressed="${st.timerSource==="own"}">My own timer</button></div>
     <p class="muted" style="font-size:14px">${st.timerSource==="own"?"Shoot buttons open a form for the times from your timer. Plans, scoring and progress work the same.":"The phone listens for shots. Switch if you'd rather use a dedicated shot timer."}</p></div></div>
@@ -1041,6 +1061,7 @@ app.addEventListener("click",async e=>{
     if(b.dataset.fpar)st.freePar=Math.max(0.1,Math.min(99,Math.round((st.freePar+(+b.dataset.fpar))*100)/100));
     if(b.dataset.fgap)st.dryGap=Math.max(1,Math.min(15,st.dryGap+(+b.dataset.fgap)));
     save();render();return;}
+  if(b.dataset.level){DB.settings.level=b.dataset.level;save();if(S.run&&S.run.state==="idle"&&S.run.drillId&&!S.run.qual){const dd=byId(S.run.drillId);S.run.par=parOf(dd,dd.fixedStart||startPos());}render();return;}
   if(b.dataset.src){DB.settings.timerSource=b.dataset.src;save();render();return;}
   if(b.dataset.planStart){const pl=DB.plans.find(x=>x.id===b.dataset.planStart);startPlay(pl);S.confirmEnd=false;go("play");return;}
   if(b.dataset.planEdit){S.editPlanId=b.dataset.planEdit;S.confirmPlanDel=null;go("planEdit");return;}
@@ -1089,7 +1110,7 @@ app.addEventListener("click",async e=>{
   else if(a.startsWith("prog-")){S.progressDrill=a.slice(5);go("progress");}
   else if(a==="drill-back"){const r=S.run;if(r&&r.state!=="idle"){r.shots=[];finishRun();}if(playFor(r.drillId))go("play");else go("drill",{drillId:r.drillId});}
   else if(a==="start"){const r=S.run; r.repeating=!r.drillId&&!r.qual&&DB.settings.freeMode==="dry"&&DB.settings.dryRepeat; await startRun();}
-  else if(a.startsWith("dry-")){const d=byId(a.slice(4));const st=DB.settings;st.freeMode="dry";st.freeParOn=true;st.freePar=d.par[d.fixedStart||startPos()];save();S.run=newRun(null);S.run.label=d.name;go("timer");}
+  else if(a.startsWith("dry-")){const d=byId(a.slice(4));const st=DB.settings;st.freeMode="dry";st.freeParOn=true;st.freePar=parOf(d,d.fixedStart||startPos());save();S.run=newRun(null);S.run.label=d.name;go("timer");}
   else if(a==="stop"){const r=S.run; if(r.repeating){r.repeating=false;clearTimeout(r.rt);} finishRun(); render();}
   else if(a==="tapshot"){const r=S.run;if(r.state==="live")addShot(Audio_.ctx.currentTime-r.beepAt);}
   else if(a==="save"||a==="save-again"){saveReview();const id=S.review.drillId;S.review=null;
